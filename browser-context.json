@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    {
+      "name": "lastTenantName",
+      "value": "beedevs",
+      "domain": "login.qasphere.com",
+      "path": "/",
+      "expires": 1789676754.631677,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
