@@ -37,14 +37,23 @@ export default defineConfig({
         //Artifacts
         screenshot: 'on',
         video: 'on',
-        storageState: 'browser-context.json'
+        storageState: 'auth.json'
     },
 
     /* Configure projects for major browsers */
     projects: [
         {
-            name: 'chromium',
+            name: 'ui-tests',
+            testDir: './tests/ui-tests',
             use: { ...devices['Desktop Chrome'] }
+        },
+        {
+            name: 'api-tests',
+            testDir: './tests/api-tests'
+        },
+        {
+            name: 'setup-tests',
+            testDir: './tests/setup'
         }
 
         // {
