@@ -20,7 +20,7 @@ export const test = base.extend<TestOptions>({
         await use(requestHandler);
     },
 
-    config: async (_, use) => {
+    config: async ({}, use) => {
         await use(config);
     }
 });
