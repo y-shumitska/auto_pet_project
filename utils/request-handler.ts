@@ -123,19 +123,31 @@ export class RequestHandler {
         return responseJSON;
     }
 
-    public async deleteRequest(statusCode: number): Promise<void> {
+    public async deleteRequest(statusCode: number): Promise<any> {
         const url = this.getUrl();
+        let responseJSON: any;
 
         await test.step(`DELETE request to: ${url}`, async () => {
-            this.logger.logRequest('DELETE', url, this.apiHeaders);
-            const response = await this.request.delete(url, { headers: this.apiHeaders });
+            this.logger.logRequest('DELETE', url, this.apiHeaders, this.apiBody);
+            const response = await this.request.delete(url, { headers: this.apiHeaders, data: this.apiBody });
             const actualStatus = response.status();
+            // responseJSON = await response.json();
+            const bodyBuffer = await response.body();
+            if (bodyBuffer && bodyBuffer.length > 0) {
+                try {
+                    responseJSON = JSON.parse(bodyBuffer.toString());
+                } catch {
+                    // optional: log a warning
+                    responseJSON = null;
+                }
+            }
 
             this.logger.logResponse(actualStatus);
             this.statusCodeValidator(actualStatus, statusCode, this.deleteRequest);
         });
 
         this.cleanupFields();
+        return responseJSON;
     }
 
     private getUrl(): string {

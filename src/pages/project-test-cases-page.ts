@@ -21,23 +21,41 @@ export class ProjectTestCasesPage {
         return this.page.locator('[type="submit"]');
     }
 
-    private get editTestCaseButton(): Locator {
+    private get updateTestCaseButton(): Locator {
         return this.page.locator('[title="Edit test case"]');
+    }
+
+    private get testCaseMenuButton(): Locator {
+        return this.page.locator('[title="Test case options"]');
+    }
+
+    private get deleteTestCaseButton(): Locator {
+        return this.page.locator('[title="Test case options"]'
+            + ' ~ div ul li >> button:has-text("Delete")');
+    }
+
+    private get deleteTestCasePopup(): Locator {
+        return this.page.locator('p', { hasText: 'Are you sure you want to delete 1 test case?' });
+    }
+
+    private get deleteTestCaseYesButton(): Locator {
+        return this.page.locator('button', { hasText: "Yes, I'm sure" });
     }
 
     public get createdFolder(): Locator {
         return this.page.locator('[title="Test folder"]');
     }
 
-    public get createdTestCase(): Locator {
+    public get createdTestCaseTitle(): Locator {
         return this.page.locator('[title="This is a test title"]');
     }
 
-    public get editedTestCase(): Locator {
+    public get updatedTestCaseTitle(): Locator {
         return this.page.locator('[title="This is a test title EDITED"]');
     }
 
-    public constructor(private page: Page) {}
+
+    public constructor(private page: Page) { }
 
     public async goto(): Promise<void> {
         (await this.page.goto('https://beedevs.eu1.qasphere.com/project/NTP/tcase'), { waitUntil: 'load' });
@@ -58,12 +76,24 @@ export class ProjectTestCasesPage {
     }
 
     public async openCreatedTestCase(): Promise<void> {
-        await this.createdTestCase.waitFor();
-        await this.createdTestCase.click();
+        await this.createdTestCaseTitle.waitFor();
+        await this.createdTestCaseTitle.click();
     }
 
-    public async openEditTestCasePage(): Promise<void> {
-        await this.editTestCaseButton.waitFor();
-        await this.editTestCaseButton.click();
+    public async openUpdateTestCasePage(): Promise<void> {
+        await this.updateTestCaseButton.waitFor();
+        await this.updateTestCaseButton.click();
+    }
+
+    public async deleteTestCase(): Promise<void> {
+        await this.updatedTestCaseTitle.waitFor();
+        await this.updatedTestCaseTitle.click();
+        await this.testCaseMenuButton.waitFor();
+        await this.testCaseMenuButton.click();
+        await this.deleteTestCaseButton.waitFor();
+        await this.deleteTestCaseButton.click();
+        await this.deleteTestCasePopup.waitFor();
+        await this.deleteTestCaseYesButton.waitFor();
+        await this.deleteTestCaseYesButton.click();
     }
 }

@@ -10,5 +10,5 @@ test('Creation of a test case', async ({ page }) => {
     const testCaseCreationPage = new TestCaseCreationPage(page);
     await testCaseCreationPage.createTestCase();
 
-    await expect(projectTestCasesPage.createdTestCase).toBeVisible();
+    await expect(projectTestCasesPage.createdTestCaseTitle).toBeVisible();
 });

@@ -6,10 +6,10 @@ test('Update of a test case', async ({ page }) => {
     const projectTestCasesPage = new ProjectTestCasesPage(page);
     await projectTestCasesPage.goto();
     await projectTestCasesPage.openCreatedTestCase();
-    await projectTestCasesPage.openEditTestCasePage();
+    await projectTestCasesPage.openUpdateTestCasePage();
 
     const updateTestCasePage = new UpdateTestCasePage(page);
     await updateTestCasePage.updateTestCase();
 
-    await expect(projectTestCasesPage.editedTestCase).toBeVisible();
+    await expect(projectTestCasesPage.updatedTestCaseTitle).toBeVisible();
 });

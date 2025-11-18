@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "seq": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "id",
+        "seq"
+    ]
+}
