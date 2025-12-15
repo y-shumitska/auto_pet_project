@@ -2,6 +2,7 @@ import { test } from '../../utils/fixtures';
 import { expect } from '../../utils/custom-expect';
 import testCasePostRequestPayload from '../../request-objects/test-cases/POST_test_case.json'
 import testCaseDeleteRequestPayload from '../../request-objects/test-cases/DELETE_test_case.json'
+import { getNewRandomTestCase } from 'utils/data-generator';
 
 type TestCaseDeleteRequestPayload = {
     tcaseIds: string[];
@@ -79,10 +80,11 @@ test('Creation and update of a test case', async ({ api }) => {
     expect(updatedTestCaseResponse.message).toBe('Test case updated');
 });
 
-test.only('Creation and deletion of a test case', async ({ api }) => {
+test('Creation and deletion of a test case', async ({ api }) => {
+    const testCasePostRequest = getNewRandomTestCase()
     const newTestCaseResponse = await api
         .path('/project/TP/tcase')
-        .body(testCasePostRequestPayload)
+        .body(testCasePostRequest)
         .postRequest(201);
     expect(newTestCaseResponse).toHaveProperty('id');
     const testCaseId = newTestCaseResponse.id;

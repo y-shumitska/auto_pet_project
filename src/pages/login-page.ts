@@ -15,7 +15,7 @@ export class LoginPage {
         return this.page.locator('[data-testid="avatar"]');
     }
 
-    public constructor(private page: Page) {}
+    public constructor(private page: Page) { }
 
     public async goto(): Promise<void> {
         (await this.page.goto('https://beedevs.eu1.qasphere.com/login'), { waitUntil: 'load' });
@@ -26,9 +26,9 @@ export class LoginPage {
         if (await this.avatarButton.isVisible()) {
             return;
         }
-        await this.loginButton.waitFor();
-        await this.workEmailInput.fill(email);
-        await this.passwordInput.fill(password);
+        await this.workEmailInput.waitFor();
+        await this.workEmailInput.fill(email, { force: true });
+        await this.passwordInput.fill(password, { force: true });
         await this.loginButton.click();
         await this.avatarButton.waitFor();
     }

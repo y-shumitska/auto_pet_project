@@ -9,7 +9,12 @@
     "requirements": [],
     "links": [],
     "tags": [],
-    "steps": [],
+    "steps": [
+        {
+            "description": "Test step",
+            "expected": "Test expected result"
+        }
+    ],
     "customFields": {},
     "parameterValues": null,
     "isDraft": false
