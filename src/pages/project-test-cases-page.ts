@@ -1,8 +1,12 @@
 import { Locator, Page } from '@playwright/test';
 
 export class ProjectTestCasesPage {
+    private get createButton(): Locator {
+        return this.page.locator('[title="Create test case"]');
+    }
+
     private get createTestCaseButton(): Locator {
-        return this.page.locator('div > a[role="link"]');
+        return this.page.locator('[data-testid="create-tcase-dropdown"] > ul > li:first-child');
     }
 
     private get createFolderButton(): Locator {
@@ -62,6 +66,8 @@ export class ProjectTestCasesPage {
     }
 
     public async openCreateTestCasePage(): Promise<void> {
+        await this.createButton.waitFor();
+        await this.createButton.click();
         await this.createTestCaseButton.waitFor();
         await this.createTestCaseButton.click();
     }

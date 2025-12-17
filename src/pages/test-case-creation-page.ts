@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 
 export class TestCaseCreationPage {
     private get titleField(): Locator {
-        return this.page.locator('input[placeholder="Test Case Title"]');
+        return this.page.locator('input[placeholder="Test case title"]');
     }
 
     private get priorityMenu(): Locator {

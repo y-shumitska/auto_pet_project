@@ -10,71 +10,33 @@ type TestCaseDeleteRequestPayload = {
 
 test.use({ storageState: 'auth.json' });
 
+test.describe.configure({ mode: 'serial' });
+
 test('Creation of a test case', async ({ api }) => {
+    const testCasePostRequest = getNewRandomTestCase()
     const newTestCaseResponse = await api
         .path('/project/TP/tcase')
-        .body({
-            type: 'standalone',
-            folderId: 56,
-            pos: null,
-            title: 'test 13',
-            priority: 'medium',
-            comment: '',
-            files: [],
-            requirements: [],
-            links: [],
-            tags: [],
-            steps: [],
-            customFields: {},
-            parameterValues: null,
-            isDraft: false
-        })
+        .body(testCasePostRequest)
         .postRequest(201);
     expect(newTestCaseResponse).shouldMatchSchema('test-cases', 'POST_test_case')
     expect(newTestCaseResponse).toHaveProperty('id');
 });
 
 test('Creation and update of a test case', async ({ api }) => {
+    const testCasePostRequest = getNewRandomTestCase()
     const newTestCaseResponse = await api
         .path('/project/TP/tcase')
-        .body({
-            type: 'standalone',
-            folderId: 56,
-            pos: null,
-            title: 'test 8',
-            priority: 'medium',
-            comment: '',
-            files: [],
-            requirements: [],
-            links: [],
-            tags: [],
-            steps: [],
-            customFields: {},
-            parameterValues: null,
-            isDraft: false
-        })
+        .body(testCasePostRequest)
         .postRequest(201);
+    expect(newTestCaseResponse).shouldMatchSchema('test-cases', 'POST_test_case')
     expect(newTestCaseResponse).toHaveProperty('id');
     const testCaseId = newTestCaseResponse.id;
 
+    const testCasePatchRequest = getNewRandomTestCase()
+    testCasePatchRequest.title = testCasePatchRequest.title + ' updated'
     const updatedTestCaseResponse = await api
         .path(`/project/TP/tcase/${testCaseId}`)
-        .body({
-            type: 'standalone',
-            folderId: 56,
-            pos: null,
-            title: 'test 8 updated',
-            priority: 'medium',
-            comment: '',
-            files: [],
-            requirements: [],
-            links: [],
-            tags: [],
-            steps: [],
-            customFields: {},
-            parameterValues: null,
-            isDraft: false
-        })
+        .body(testCasePatchRequest)
         .patchRequest(200);
     expect(updatedTestCaseResponse).shouldMatchSchema('test-cases', 'PATCH_test_case')
     expect(updatedTestCaseResponse.message).toBe('Test case updated');
