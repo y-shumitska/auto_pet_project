@@ -40,20 +40,28 @@ export default defineConfig({
         storageState: 'auth.json'
     },
 
-    /* Configure projects for major browsers */
+    /* Configure projects and their execution order:
+     * 1) setup-tests  -> prepares auth, etc.
+     * 2) api-tests    -> API layer
+     * 3) ui-tests     -> UI layer
+     *
+     * Project dependencies ensure this order when running `npx playwright test`.
+     */
     projects: [
-        {
-            name: 'ui-tests',
-            testDir: './tests/ui-tests',
-            use: { ...devices['Desktop Chrome'] }
-        },
-        {
-            name: 'api-tests',
-            testDir: './tests/api-tests'
-        },
         {
             name: 'setup-tests',
             testDir: './tests/setup'
+        },
+        {
+            name: 'api-tests',
+            testDir: './tests/api-tests',
+            dependencies: ['setup-tests']
+        },
+        {
+            name: 'ui-tests',
+            testDir: './tests/ui-tests',
+            use: { ...devices['Desktop Chrome'] },
+            dependencies: ['api-tests']
         }
 
         // {
